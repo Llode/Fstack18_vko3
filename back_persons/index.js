@@ -53,7 +53,7 @@ let now = new Date();
 
 
 
-app.get('/info', (req, res) => {
+app.get('/api/info', (req, res) => {
     const txt = `<ul>Puhelinluettelossa on ${personCount()} henkilön tiedot <BR/> ${now}</ul>`
     res.send(txt)
 })

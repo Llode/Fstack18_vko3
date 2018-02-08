@@ -1,1 +1,1 @@
-GET https://pure-lake-96341.herokuapp.com/api/persons
+GET http://localhost:3001/api/persons
