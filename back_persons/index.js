@@ -1,10 +1,20 @@
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser')
 const repl = require('repl')
 const date = require('date-and-time')
+const morgan = require('morgan')
+const cors = require('cors')
 
+const app = express()
 app.use(bodyParser.json())
+app.use(cors())
+
+morgan.token('type', (req,res) => {
+    return JSON.stringify(req.body)
+})
+app.use(morgan(':method :url :type :status :res[content-length] - :response-time ms'))
+
+//app.use(morgan('dev'))
 
 const baseUrl = 'http://localhost:3001/api/persons'
 
@@ -42,11 +52,9 @@ personCount = () => {
     return max
 }
 
-// infoa = (arr) => {
-//     console.log('cat', personCount(arr), typeof arr, typeof personCount(arr))
-// } 
-
 let now = new Date();
+
+
 
 app.get('/info', (req, res) => {
     const txt = `<ul>Puhelinluettelossa on ${personCount()} henkilön tiedot <BR/> ${now}</ul>`
@@ -62,7 +70,7 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id)
+    const id = Number('getID ', req.params.id)
     const person = persons.find(note => note.id === id)
 
     if (person) {
@@ -73,33 +81,34 @@ app.get('/api/persons/:id', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id)
+    const id = Number('deleteID ', req.params.id)
     persons = persons.filter(person => person.id !== id)
 
     res.status(204).end()
 })
 
 const generateId = () => {
+    max = 600
     const maxId = Math.floor(Math.random() * Math.floor(max))
-    console.log(maxId)
+    console.log('idnro ', maxId)
     return maxId
 }
 
 app.post('/api/persons', (req, res) => {
     const body = req.body
-    const person = persons.find(person => person.name === body.name)
-    console.log('person', person, typeof person)
-    
-    if (body.name === undefined) {
+    const check = persons.find(person => person.name === body.name)
+    console.log('check ', check, typeof check)
+    console.log('body ', body, typeof body)
+    if (body.name === "" || body.name === undefined) {
         return res.status(400).json({ error: 'Name is missing!' })
     }
-    if (body.number === undefined) {
+    if (body.number === "" || body.number === undefined) {
         return res.status(400).json({ error: 'Number is missing!' })
     }
-    if (person.number === body.number) {
-        return res.status(400).json({ error: 'Name must be unique!'})
-    }
+    if (check && check.name === body.name && body.number !== undefined) {
+        return res.status(400).json({ error: 'Name must be unique!' })
 
+    }
     const person = {
         name: body.name,
         number: body.number,
@@ -111,9 +120,7 @@ app.post('/api/persons', (req, res) => {
     res.json(person)
 })
 
-
-
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
