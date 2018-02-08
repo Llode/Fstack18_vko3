@@ -1,0 +1,31 @@
+{
+  "name": "back_persons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Llode/Fstack18_vko3.git"
+  },
+  "keywords": [
+    "backend",
+    "vko3"
+  ],
+  "author": "Lauri Lode",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Llode/Fstack18_vko3/issues"
+  },
+  "homepage": "https://github.com/Llode/Fstack18_vko3#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
+  }
+}
