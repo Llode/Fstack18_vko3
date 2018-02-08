@@ -15,10 +15,6 @@ morgan.token('type', (req,res) => {
 })
 app.use(morgan(':method :url :type :status :res[content-length] - :response-time ms'))
 
-//app.use(morgan('dev'))
-
-const baseUrl = 'http://localhost:3001/api/persons'
-
 let persons = [
     {
         id: 1,
