@@ -15,6 +15,7 @@ morgan.token('type', (req,res) => {
 })
 app.use(morgan(':method :url :type :status :res[content-length] - :response-time ms'))
 
+
 let persons = [
     {
         id: 1,
@@ -58,7 +59,7 @@ app.get('/api/info', (req, res) => {
     res.send(txt)
 })
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('<hi>ASD</h1>')
 })
 
